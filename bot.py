@@ -1,7 +1,10 @@
 import telebot
-from boto.s3.connection import S3Connection
+#from boto.s3.connection import S3Connection
+import os
 
-token = S3Connection(os.environ['TOKEN'])
+#token = S3Connection(os.environ['TOKEN'])
+token = os.environ.get('TOKEN')
+print(token)
 bot = telebot.TeleBot(token)
 
 
