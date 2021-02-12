@@ -12,7 +12,7 @@ responses = {
 "hello": "Hello you!"
 }
 
-default_response = "I don't understand you :( Please type in the \help command to see what I can do"
+default_response = "I don't understand you :( Please type in the \/help command to see what I can do"
 
 responses = defaultdict(lambda: default_response, responses)
 
