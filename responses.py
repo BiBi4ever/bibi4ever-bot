@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 snowflake = u'\U00002744'
 
 responses = {
