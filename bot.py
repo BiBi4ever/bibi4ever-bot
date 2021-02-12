@@ -36,6 +36,9 @@ responses = defaultdict(lambda: default_response, responses)
 
 
 # Handlers
+@bot.message_handler(commands=['help'])
+def send_help(message):
+    bot.send_message(message.from_user.id, help_response)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -44,10 +47,6 @@ def start_message(message):
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
     bot.send_message(message.from_user.id, responses[message.text.lower()])
-
-@bot.message_handler(commands=['help'])
-def send_help(message):
-    bot.send_message(message.from_user.id, help_response)
 
 @bot.message_handler(commands=['sheet_link'])
 def send_help(message):
