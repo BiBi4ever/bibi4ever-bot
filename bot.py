@@ -1,6 +1,6 @@
 import telebot
-#from boto.s3.connection import S3Connection
 import os
+from collections import defaultdict
 
 #token = S3Connection(os.environ['TOKEN'])
 token = os.environ.get('TOKEN')
@@ -12,8 +12,14 @@ responses = {
 "hello": "Hello you!"
 }
 
-#responses.setdefault(key, default=DEFAULT)
+default_response = "I don't understand you :( Please type in the \help command to see what I can do"
 
+responses = defaultdict(lambda: default_response, responses)
+
+
+
+
+#responses.setdefault(key, default=DEFAULT)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -21,10 +27,7 @@ def start_message(message):
 
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
-    if message.text.lower() in responses:
-        bot.send_message(message.from_user.id, responses[message.text.lower()])
-    else:
-        bot.send_message(message.from_user.id, "Type \'Hello\' to begin")
+    bot.send_message(message.from_user.id, responses[message.text.lower()])
 
 
 bot.polling()
