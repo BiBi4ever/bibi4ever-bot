@@ -1,3 +1,5 @@
 requests==2.20.0
 PyTelegramBotAPI==2.2.3
 boto3
+gspread
+oauth2client
