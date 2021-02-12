@@ -4,7 +4,7 @@ from collections import defaultdict
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-from responses import responses
+from responses import *
 
 #token = S3Connection(os.environ['TOKEN'])
 token = os.environ.get('TOKEN')
