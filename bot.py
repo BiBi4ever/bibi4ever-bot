@@ -22,6 +22,8 @@ sheet = client.open(sheet_name).sheet1
 
 # Responses
 
+snowflake = u'\U00002744'
+
 responses = {
 "hi": "Hello you!",
 "hello": "Hello you!"
@@ -29,7 +31,7 @@ responses = {
 
 default_response = "I don't understand you :( Please type in the /help command to see what I can do"
 start_response = "A human?! I am so happy! Please type in the /help command to see what I can do"
-help_response = "Here's a list of available commands: \n:panda: /help - displays this message\n:koala: /start - displays start message\n:see_no_evil: /sheet_link - shows link to sheet\n:see_no_evil: /sheet_display - shows all rows in sheet"
+help_response = f"Here's a list of available commands: \n{snowflake} /help - displays this message\n:koala: /start - displays start message\n:see_no_evil: /sheet_link - shows link to sheet\n:see_no_evil: /sheet_display - shows all rows in sheet"
 
 
 responses = defaultdict(lambda: default_response, responses)
