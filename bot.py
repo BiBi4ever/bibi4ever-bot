@@ -13,6 +13,7 @@ responses = {
 }
 
 default_response = "I don't understand you :( Please type in the /help command to see what I can do"
+start_response = "A human?! I am so happy! Please type in the /help command to see what I can do"
 
 responses = defaultdict(lambda: default_response, responses)
 
@@ -23,7 +24,7 @@ responses = defaultdict(lambda: default_response, responses)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.from_user.id, "A human?!")
+    bot.send_message(message.from_user.id, start_response)
 
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
