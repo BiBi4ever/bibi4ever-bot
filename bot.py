@@ -1,8 +1,6 @@
 import telebot
 import os
 from collections import defaultdict
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import json
 from auth import launch_google_client
 
