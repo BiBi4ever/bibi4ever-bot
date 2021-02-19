@@ -1,27 +1,23 @@
+# libraries
 import telebot
 import os
 from collections import defaultdict
 import json
-from auth import launch_google_client
 
-from responses import *
+# user modules
+from utils.auth import launch_google_client
+from utils.google_sheet import get_row, get_header
+from data.responses import *
 
-#tokens = S3Connection(os.environ['TOKEN'])
-bot_token = os.environ.get('TOKEN')
-google_token = json.loads(os.environ.get('GOOGLE_ACCESS'))
-
-#clients
-bot = telebot.TeleBot(bot_token)
-google_client = launch_google_client(google_token)
-
+#tokens and clients
+bot_token, google_token = os.environ.get('TOKEN'), json.loads(os.environ.get('GOOGLE_ACCESS'))
+bot, google_client = telebot.TeleBot(bot_token), launch_google_client(google_token)
 
 # Data
-sheet_link = "https://docs.google.com/spreadsheets/d/16hsfTo6p2ZRhPvwg3fSXJUSkAcx15HRz7unaOubSBOs/edit#gid=0"
-sheet_name = "BotData"
-google_sheet = google_client.open(sheet_name).sheet1
+sheet_link, sheet_name = os.environ.get('SHEET_LINK'), os.environ.get('SHEET_NAME')
+google_sheet = get_all_records(google_client.open(sheet_name).sheet1)
 
 # Responses
-# Handlers
 @bot.message_handler(commands=['help'])
 def send_help(message):
     bot.send_message(message.from_user.id, help_response)
@@ -36,12 +32,10 @@ def sheet_link(message):
 
 @bot.message_handler(commands=['sheet_display'])
 def sheet_display(message):
-    result = google_sheet.get_all_records()
-
-    header = "**" + " ".join(list(result[0].keys())) + "**"
-    row1 = " ".join([str(x) for x in result[0].values()])
-    row2 = " ".join([str(x) for x in result[1].values()])
-    row_count = "Total records #" + str(len(result))
+    header = get_header(google_sheet)
+    row1 = get_row(1)
+    row2 = get_row(2)
+    row_count = "Total records #" + str(len(google_sheet))
 
     response = "\n".join([header, row1, row2, "...", row_count])
     bot.send_message(message.from_user.id, response, parse_mode="markdown")
@@ -54,8 +48,7 @@ def sheet_row(message):
 
 def send_row(message):
     n = int(message.text)
-    result = google_sheet.get_all_records()
-    rown = " ".join([str(x) for x in result[int(n-1)].values()])
+
     bot.send_message(message.from_user.id, rown)
 
 """
