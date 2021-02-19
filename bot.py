@@ -49,13 +49,12 @@ def sheet_row(message):
 
 def send_row(message):
     try:
-        int(message.text)
+        n = int(message.text)
+        rown = get_row(google_sheet, n)
+        bot.send_message(message.from_user.id, rown)
     except:
-        warning = bot.send_message(message.from_user.id, "type in row number")
-        bot.register_next_step_handler(warning, send_row)
-    n = int(message.text)
-    rown = get_row(google_sheet, n)
-    bot.send_message(message.from_user.id, rown)
+        warning = bot.send_message(message.from_user.id, "Not a number, try again!")
+        bot.register_next_step_handler(warning, sheet_row)
 
 """
 @bot.message_handler(content_types=['text'])
