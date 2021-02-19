@@ -15,7 +15,7 @@ bot, google_client = telebot.TeleBot(bot_token), launch_google_client(google_tok
 
 # Data
 sheet_link, sheet_name = os.environ.get('SHEET_LINK'), os.environ.get('SHEET_NAME')
-google_sheet = get_all_records(google_client.open(sheet_name).sheet1)
+google_sheet = google_client.open(sheet_name).sheet1.get_all_records()
 
 # Responses
 @bot.message_handler(commands=['help'])
