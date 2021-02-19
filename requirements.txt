@@ -3,3 +3,4 @@ PyTelegramBotAPI==2.2.3
 boto3
 gspread
 oauth2client
+json

@@ -3,24 +3,25 @@ import os
 from collections import defaultdict
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import json
 
 from responses import *
 
 #token = S3Connection(os.environ['TOKEN'])
-token = os.environ.get('TOKEN')
-print(token)
-bot = telebot.TeleBot(token)
+bot_token = os.environ.get('TOKEN')
+bot = telebot.TeleBot(bot_token)
 
 # Data
 sheet_link = "https://docs.google.com/spreadsheets/d/16hsfTo6p2ZRhPvwg3fSXJUSkAcx15HRz7unaOubSBOs/edit#gid=0"
-"""
+
+google_token = json.loads(os.environ.get('GOOGLE_ACCESS'))
+
 scope = ['https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('google_access.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(google_token, scope)
 client = gspread.authorize(creds)
 
 sheet_name = "BotData"
 sheet = client.open(sheet_name).sheet1
-"""
 
 # Responses
 
