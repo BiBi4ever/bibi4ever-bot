@@ -46,6 +46,17 @@ def send_help(message):
     response = "\n".join([header, row1, row2, "...", row_count])
     bot.send_message(message.from_user.id, response, parse_mode="markdown")
 
+@bot.message_handler(commands=['sheet_row'])
+def send_help(message):
+    # user prompt "Type in row number"
+    bot.send_message(message.from_user.id, "type in row number")
+    # user input
+    n = input()
+    rown = " ".join([str(x) for x in result[int(n-1)].values()])
+    bot.send_message(message.from_user.id, rown)
+    # bot print row
+
+
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
     bot.send_message(message.from_user.id, responses[message.text.lower()])
