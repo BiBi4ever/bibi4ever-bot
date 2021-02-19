@@ -48,7 +48,7 @@ def sheet_row(message):
 
 def send_row(message):
     n = int(message.text)
-
+    rown = get_row(n)
     bot.send_message(message.from_user.id, rown)
 
 """
