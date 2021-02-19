@@ -58,10 +58,10 @@ def send_row(message):
     rown = " ".join([str(x) for x in result[int(n-1)].values()])
     bot.send_message(message.from_user.id, rown)
 
-
+"""
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
     bot.send_message(message.from_user.id, responses[message.text.lower()])
-
+"""
 
 bot.polling()
