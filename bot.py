@@ -4,30 +4,25 @@ from collections import defaultdict
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
+from auth import launch_google_client
 
 from responses import *
 
-#token = S3Connection(os.environ['TOKEN'])
+#tokens = S3Connection(os.environ['TOKEN'])
 bot_token = os.environ.get('TOKEN')
+google_token = json.loads(os.environ.get('GOOGLE_ACCESS'))
+
+#clients
 bot = telebot.TeleBot(bot_token)
+google_client = launch_google_client(google_token)
+
 
 # Data
 sheet_link = "https://docs.google.com/spreadsheets/d/16hsfTo6p2ZRhPvwg3fSXJUSkAcx15HRz7unaOubSBOs/edit#gid=0"
-
-google_token = json.loads(os.environ.get('GOOGLE_ACCESS'))
-
-scope = ['https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_dict(google_token, scope)
-client = gspread.authorize(creds)
-
 sheet_name = "BotData"
-sheet = client.open(sheet_name).sheet1
+google_sheet = google_client.open(sheet_name).sheet1
 
 # Responses
-
-
-
-
 # Handlers
 @bot.message_handler(commands=['help'])
 def send_help(message):
@@ -43,16 +38,19 @@ def send_help(message):
 
 @bot.message_handler(commands=['sheet_display'])
 def send_help(message):
-    bot.send_message(message.from_user.id, "PLACEHOLDER")
+    result = google_sheet.get_all_records()
+
+    header = " ".join(list(result[0].keys()))
+    row1 = " ".join([str(x) for x in result[0].values()])
+    row2 = " ".join([str(x) for x in result[1].values()])
+    row_count = "Total records #" + str(len(result))
+
+    response = "\n".join([header, row1, row2, "...", row_count])
+    bot.send_message(message.from_user.id, response)
 
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
     bot.send_message(message.from_user.id, responses[message.text.lower()])
-
-
-
-#/sheet_link
-#/sheet_display
 
 
 bot.polling()
