@@ -54,6 +54,7 @@ def sheet_row(message):
 
 def send_row(message):
     n = int(message.text)
+    result = google_sheet.get_all_records()
     rown = " ".join([str(x) for x in result[int(n-1)].values()])
     bot.send_message(message.from_user.id, rown)
 
