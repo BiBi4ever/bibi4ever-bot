@@ -54,7 +54,7 @@ def send_row(message):
         bot.send_message(message.from_user.id, rown)
     except:
         warning = bot.send_message(message.from_user.id, "Not a number, try again!")
-        bot.register_next_step_handler(warning, sheet_row)
+        bot.register_next_step_handler(warning, send_row)
 
 """
 @bot.message_handler(content_types=['text'])
