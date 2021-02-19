@@ -49,10 +49,11 @@ def sheet_row(message):
 
 def send_row(message):
     try:
-        n = int(message.text)
+        int(message.text)
     except:
         warning = bot.send_message(message.from_user.id, "type in row number")
         bot.register_next_step_handler(warning, send_row)
+    n = int(message.text)
     rown = get_row(google_sheet, n)
     bot.send_message(message.from_user.id, rown)
 
