@@ -47,7 +47,10 @@ def sheet_row(message):
     bot.register_next_step_handler(prompt, send_row)
 
 def send_row(message):
-    n = int(message.text)
+    try:
+        int(message.text)
+    except:
+        bot.register_next_step_handler("Not a number, try again!", send_row)
     rown = get_row(google_sheet, n)
     bot.send_message(message.from_user.id, rown)
 
