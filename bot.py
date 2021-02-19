@@ -49,12 +49,13 @@ def sheet_display(message):
 @bot.message_handler(commands=['sheet_row'])
 def sheet_row(message):
     # user prompt "Type in row number"
-    bot.send_message(message.from_user.id, "type in row number")
-    # user input
-    n = input()
+    prompt = bot.send_message(message.from_user.id, "type in row number")
+    bot.register_next_step_handler(prompt, send_row)
+
+def send_row(message):
+    n = int(message.text)
     rown = " ".join([str(x) for x in result[int(n-1)].values()])
     bot.send_message(message.from_user.id, rown)
-    # bot print row
 
 
 @bot.message_handler(content_types=['text'])
