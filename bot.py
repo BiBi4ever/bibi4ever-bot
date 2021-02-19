@@ -33,8 +33,8 @@ def sheet_link(message):
 @bot.message_handler(commands=['sheet_display'])
 def sheet_display(message):
     header = get_header(google_sheet)
-    row1 = get_row(1)
-    row2 = get_row(2)
+    row1 = get_row(google_sheet, 1)
+    row2 = get_row(google_sheet, 2)
     row_count = "Total records #" + str(len(google_sheet))
 
     response = "\n".join([header, row1, row2, "...", row_count])
@@ -48,7 +48,7 @@ def sheet_row(message):
 
 def send_row(message):
     n = int(message.text)
-    rown = get_row(n)
+    rown = get_row(google_sheet, n)
     bot.send_message(message.from_user.id, rown)
 
 """
