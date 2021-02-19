@@ -31,11 +31,11 @@ def start_message(message):
     bot.send_message(message.from_user.id, start_response)
 
 @bot.message_handler(commands=['sheet_link'])
-def send_help(message):
+def sheet_link(message):
     bot.send_message(message.from_user.id, sheet_link)
 
 @bot.message_handler(commands=['sheet_display'])
-def send_help(message):
+def sheet_display(message):
     result = google_sheet.get_all_records()
 
     header = "**" + " ".join(list(result[0].keys())) + "**"
@@ -47,7 +47,7 @@ def send_help(message):
     bot.send_message(message.from_user.id, response, parse_mode="markdown")
 
 @bot.message_handler(commands=['sheet_row'])
-def send_help(message):
+def sheet_row(message):
     # user prompt "Type in row number"
     bot.send_message(message.from_user.id, "type in row number")
     # user input
