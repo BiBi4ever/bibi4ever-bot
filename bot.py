@@ -38,13 +38,13 @@ def send_help(message):
 def send_help(message):
     result = google_sheet.get_all_records()
 
-    header = " ".join(list(result[0].keys()))
+    header = "**" + " ".join(list(result[0].keys())) + "**"
     row1 = " ".join([str(x) for x in result[0].values()])
     row2 = " ".join([str(x) for x in result[1].values()])
     row_count = "Total records #" + str(len(result))
 
     response = "\n".join([header, row1, row2, "...", row_count])
-    bot.send_message(message.from_user.id, response)
+    bot.send_message(message.from_user.id, response, parse_mode="markdown")
 
 @bot.message_handler(content_types=['text'])
 def send_greetings(message):
