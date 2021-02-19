@@ -18,6 +18,7 @@ sheet_link, sheet_name = os.environ.get('SHEET_LINK'), os.environ.get('SHEET_NAM
 google_sheet = google_client.open(sheet_name).sheet1.get_all_records()
 
 # Responses
+# auto help message
 @bot.message_handler(commands=['help'])
 def send_help(message):
     bot.send_message(message.from_user.id, help_response)
@@ -50,7 +51,8 @@ def send_row(message):
     try:
         n = int(message.text)
     except:
-        bot.register_next_step_handler("Not a number, try again!", send_row)
+        warning = bot.send_message(message.from_user.id, "type in row number")
+        bot.register_next_step_handler(warning, send_row)
     rown = get_row(google_sheet, n)
     bot.send_message(message.from_user.id, rown)
 
