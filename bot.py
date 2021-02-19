@@ -48,8 +48,11 @@ def sheet_row(message):
 
 def send_row(message):
     n = int(message.text)
-    rown = get_row(google_sheet, n)
-    bot.send_message(message.from_user.id, rown)
+    if n > len(google_sheet):
+        bot.send_message(message.from_user.id, f"The table is only {len(google_sheet)} long! Try again")
+    else:
+        rown = get_row(google_sheet, n)
+        bot.send_message(message.from_user.id, rown)
 
 """
 @bot.message_handler(content_types=['text'])
